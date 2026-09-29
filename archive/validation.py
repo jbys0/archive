@@ -36,7 +36,13 @@ def validate_id(value):
 
     Returns (bool, str).
     """
-    h
+    if len.value !=5{
+        return (False, "Incomplete ID")
+    }
+    if value[0]!="M" OR value[1]!="S"{
+        return (False, "Invalid format")
+    }
+    
     raise NotImplementedError("validate_id")
 
 
@@ -48,6 +54,7 @@ def validate_title(value):
 
     Returns (bool, str).
     """
+
     raise NotImplementedError("validate_title")
 
 
