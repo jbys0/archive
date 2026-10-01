@@ -19,7 +19,7 @@ FIELD_NAMES = ["id", "title", "city", "year", "condition"]
 
 
 def parse_line(line):
-    """Turn one CSV line into a dict with the five FIELD_NAMES as keys.
+    """Turn one CSV line into a dict with the five FIELD_NAMES as keys. new change
 
     Whitespace around the line (including the trailing newline) is stripped.
     Field values are stripped too.
