@@ -29,7 +29,7 @@ MAX_YEAR = 1900
 
 
 def validate_id(value):
-    """An ID is the letters 'MS' followed by exactly three digits.
+    """An ID is the letters 'MS' followed by exactly three digits. This should be removed later
 
     Valid:   "MS001", "MS742"
     Invalid: "MS1", "MS0012", "ms001", "XX001", "", "MS00A"
