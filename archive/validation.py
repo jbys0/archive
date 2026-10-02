@@ -44,9 +44,7 @@ def validate_id(value):
     if len(digits) != 3 or not digits.isdigit():
         return False, "ID must be followed by exactly three digits"
         
-    return True, 
-
-    raise NotImplementedError("validate_id")
+    return True, ""
 
 
 def validate_title(value):
@@ -57,9 +55,10 @@ def validate_title(value):
 
     Returns (bool, str).
     """
-
-
-    raise NotImplementedError("validate_title")
+    stripped_value=value.strip()
+    if len(stripped_value)<3:
+       return False, "Title must be atleast 3 characters long"
+    return True, ""
 
 
 def validate_city(value):
@@ -72,7 +71,11 @@ def validate_city(value):
     Returns (bool, str).
     """
 
-    raise NotImplementedError("validate_city")
+    cities_lower = [city.lower() for city in KNOWN_CITIES]
+    stripped_value = value.strip()
+    if  stripped_value.lower() not in cities_lower:
+       return False, "City is not known"
+    return True, ""
 
 
 def validate_year(value):
@@ -98,10 +101,6 @@ def validate_year(value):
     return False, "Year is not in range"
 
 
-    
-    raise NotImplementedError("validate_year")
-
-
 def validate_condition(value):
     """A condition must be one of VALID_CONDITIONS, case-insensitively.
 
@@ -110,7 +109,10 @@ def validate_condition(value):
 
     Returns (bool, str).
     """
-    raise NotImplementedError("validate_condition")
+    stripped_value = value.strip()
+    if stripped_value.lower() not in VALID_CONDITIONS:
+       return False, "Condition must be one of: fragile, fair or good"
+    return True, ""
 
 
 def validate_record(record):
