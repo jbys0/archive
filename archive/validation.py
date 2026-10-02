@@ -36,7 +36,16 @@ def validate_id(value):
 
     Returns (bool, str).
     """
-    h
+
+    if not value.startswith("MS"):
+        return False, "ID must start with capital letters 'MS'"
+    
+    digits = value[2:]
+    if len(digits) != 3 or not digits.isdigit():
+        return False, "ID must be followed by exactly three digits"
+        
+    return True, 
+
     raise NotImplementedError("validate_id")
 
 
@@ -48,6 +57,8 @@ def validate_title(value):
 
     Returns (bool, str).
     """
+
+
     raise NotImplementedError("validate_title")
 
 
@@ -60,6 +71,7 @@ def validate_city(value):
 
     Returns (bool, str).
     """
+
     raise NotImplementedError("validate_city")
 
 
@@ -75,6 +87,18 @@ def validate_year(value):
 
     Returns (bool, str).
     """
+    if not value.strip().isdigit():
+        return False, "Year must be numeric"
+
+    year = int(value)
+
+    if MIN_YEAR <= year <= MAX_YEAR:
+        return True, ""
+
+    return False, "Year is not in range"
+
+
+    
     raise NotImplementedError("validate_year")
 
 
