@@ -90,10 +90,11 @@ def validate_year(value):
 
     Returns (bool, str).
     """
-    if not value.strip().isdigit():
+    stripped_value=value.strip()
+    if not stripped_value.isdigit():
         return False, "Year must be numeric"
 
-    year = int(value)
+    year = int(stripped_value)
 
     if MIN_YEAR <= year <= MAX_YEAR:
         return True, ""
@@ -126,4 +127,16 @@ def validate_record(record):
 
     Do not re-write the rules here. Call the five functions above.
     """
-    raise NotImplementedError("validate_record")
+    errors=[]
+    validators={
+        "id" : validate_id,
+        "title" : validate_title,
+        "city" : validate_city,
+        "year" : validate_year,
+        "condition" : validate_condition,
+        }
+    for field, validator in validators.items():
+        ans, reason = validator(record[field])
+        if not ans:
+                errors.append(reason)
+    return errors
