@@ -46,9 +46,6 @@ def validate_id(value):
         
     return True, 
 
-    raise NotImplementedError("validate_id")
-
-
 def validate_title(value):
     """A title must be present and at least 3 characters once stripped.
 
@@ -57,6 +54,9 @@ def validate_title(value):
 
     Returns (bool, str).
     """
+    
+
+
 
 
     raise NotImplementedError("validate_title")
@@ -96,11 +96,6 @@ def validate_year(value):
         return True, ""
 
     return False, "Year is not in range"
-
-
-    
-    raise NotImplementedError("validate_year")
-
 
 def validate_condition(value):
     """A condition must be one of VALID_CONDITIONS, case-insensitively.
