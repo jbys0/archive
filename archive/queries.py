@@ -19,8 +19,7 @@ def count_before(records, year):
 
     Returns int.
     """
-    raise NotImplementedError("count_before")
-
+    return sum(int(record["year"]) < year for record in records
 
 def find_by_city(records, city):
     """Every record whose city matches `city`, case-insensitively.
@@ -30,8 +29,12 @@ def find_by_city(records, city):
 
     Returns list of dicts (empty list if none match).
     """
-    raise NotImplementedError("find_by_city")
-
+city_lower = city.lower()
+matches = []
+for record in records:
+    if record["city"].lower() == city_lower:
+        matches.append(record)
+return matches
 
 def oldest(records):
     """The record with the smallest year.
@@ -43,8 +46,13 @@ def oldest(records):
 
     Returns dict or None.
     """
-    raise NotImplementedError("oldest")
-
+if not records:
+    return None
+oldest_record = records[0]
+for record in records[1:]:
+    if int(record["year"]) < int(oldest_record["year"]):
+        oldest_record = record
+return oldest_record
 
 def cities_summary(records):
     """How many manuscripts come from each city?
@@ -56,4 +64,9 @@ def cities_summary(records):
 
     Returns dict.
     """
-    raise NotImplementedError("cities_summary")
+summary = {}
+for record in records:
+    city = record["city"]
+    summary[city] = summary.get(city, 0) + 1
+return summary
+
