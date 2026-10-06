@@ -14,6 +14,7 @@ any work.
 """
 
 from archive.errors import MalformedRecordError
+from archive.validation import validate_record
 
 FIELD_NAMES = ["id", "title", "city", "year", "condition"]
 
@@ -31,8 +32,13 @@ def parse_line(line):
 
     Returns dict.
     """
-    raise NotImplementedError("parse_line")
+    line = line.strip()
+    fields = [field.strip() for field in line.split(",")]
 
+    if len(fields) != 5:
+        raise MalformedRecordError("Expected exactly 5 fields")
+
+    return dict(zip(FIELD_NAMES, fields))
 
 def load_archive(path):
     """Read the file at `path` and return (valid_records, rejected_lines).
@@ -50,8 +56,32 @@ def load_archive(path):
 
     Returns (list, list).
     """
-    raise NotImplementedError("load_archive")
+    valid_records = []
+    rejected_lines = []
 
+    try:
+        with open(path, "r") as file:
+            for line in file:
+                if not line.strip():
+                    continue
+
+                try:
+                    record = parse_line(line)
+                except MalformedRecordError:
+                    rejected_lines.append(line)
+                    continue
+
+                reasons = validate_record(record)
+
+                if reasons:
+                    rejected_lines.append(line)
+                else:
+                    valid_records.append(record)
+
+    except FileNotFoundError:
+        return [], []
+
+    return valid_records, rejected_lines
 
 def save_archive(path, records):
     """Write every record to `path` as CSV, one per line, no header.
@@ -60,4 +90,7 @@ def save_archive(path, records):
 
     Returns None.
     """
-    raise NotImplementedError("save_archive")
+    with open(path, "w") as file:
+        for record in records:
+            values = [str(record[field]) for field in FIELD_NAMES]
+            file.write(",".join(values) + "\n")
